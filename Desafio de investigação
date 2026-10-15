@@ -1,0 +1,26 @@
+1. Execute o estoque com Lock e registre o resultado.
+
+O código foi executado com o uso de threading.Lock(), que garante que apenas um cliente por vez possa verificar e alterar o estoque. O estoque inicial era de 5 unidades, e 8 clientes tentaram comprar.
+
+Resultado esperado: 5 clientes conseguiram comprar, 3 não conseguiram, e o estoque final foi de 0 unidades.
+
+2. Retire temporariamente a proteção e ajuste a indentação do bloco.
+
+Ao retirar o Lock, vários clientes podem acessar e alterar o estoque ao mesmo tempo. Isso pode causar uma condição de corrida (race condition), em que dois ou mais clientes leem o mesmo valor antes de ele ser atualizado.
+
+3. Execute novamente algumas vezes.
+
+Ao executar o código sem proteção várias vezes, os resultados podem variar. Alguns clientes podem encontrar a mesma quantidade disponível e tentar comprar a mesma unidade, causando inconsistências no estoque. Com o Lock, o acesso é coordenado e o resultado permanece consistente.
+
+4. O estoque final ficou coerente?
+
+Com o Lock, sim. O estoque final foi de 0 unidades, pois havia 5 unidades disponíveis e cada uma foi vendida apenas uma vez. Sem o Lock, o estoque pode apresentar resultados inconsistentes.
+
+5. Mais clientes conseguiram “encontrar” a mesma quantidade disponível?
+
+Sem o Lock, sim. Dois ou mais clientes podem ler simultaneamente o mesmo valor do estoque e acreditar que a mesma quantidade de produtos está disponível. Com o Lock, cada cliente verifica o estoque depois que o cliente anterior termina sua operação.
+
+6. Explique por que uma loja virtual não pode simplesmente deixar todas as requisições alterarem o estoque sem coordenação.
+
+Uma loja virtual precisa coordenar as requisições para evitar que vários clientes comprem o mesmo produto quando existe apenas uma unidade disponível. Sem essa coordenação, podem ocorrer vendas duplicadas, estoque negativo ou inconsistências nos registros. O uso de mecanismos como Lock, transações e controle de concorrência garante que as operações sejam realizadas de forma segura e que o estoque represente a quantidade real de produtos disponíveis.
+
